@@ -4,37 +4,28 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name="logs")
+@Table(name = "logs")
 @Getter
 @Setter
-
 public class Log {
-
-    public enum TYPE {
-        CREATE,
-        UPDATE,
-        DELETE
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private TYPE action;
-    private LocalDateTime timestamp;
-    private String ipAddress;
+    private String action;
+    private String details;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    public Log(String action, LocalDateTime timestamp, String ipAddress) {
-    }
+    private User user; // Relacionamento com User
 
     public Log() {
+    }
 
+    public Log(String action, User user, String details) {
+        this.action = action;
+        this.user = user;
+        this.details = details;
     }
 }

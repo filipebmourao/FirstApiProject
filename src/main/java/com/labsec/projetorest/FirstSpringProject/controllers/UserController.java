@@ -38,9 +38,9 @@ public class UserController {
     }
 
 
-    @PutMapping("users/update")
-    public User updateUser(@RequestBody User user) { //quando nao especifico um id, um novo usuario é criado
-        return userService.updateUser(user);
+    @PutMapping("users/update/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user); // Passa o id e o objeto user
     }
 
     @DeleteMapping("users/{id}")
