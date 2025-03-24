@@ -1,5 +1,6 @@
 package com.labsec.projetorest.FirstSpringProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,9 +17,10 @@ public class Log {
     private String action;
     private String details;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user; // Relacionamento com User
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference  // Evita recursão infinita no JSON
+    private User user;
 
     public Log() {
     }

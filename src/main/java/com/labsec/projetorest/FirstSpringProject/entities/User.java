@@ -1,9 +1,11 @@
 package com.labsec.projetorest.FirstSpringProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,14 +22,11 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Log> logs; // Relacionamento com Log
+    @JsonIgnoreProperties("user")  // Evita recursão infinita no JSON
+    private List<Log> logs = new ArrayList<>();
+
 
     public User() {
     }
 
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 }
