@@ -23,12 +23,14 @@ public class UserService {
     public User updateUser(Long id, User user) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        // Atualiza os campos do usuário existente com os dados do objeto recebido
         existingUser.setName(user.getName());
         existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword()); // Atualiza a senha
-        User updatedUser = userRepository.save(existingUser); // Salva as alterações
-        logService.logAction("UPDATE_USER", updatedUser.getId(), "Usuário atualizado com sucesso");
-        return updatedUser;
+        existingUser.setPassword(user.getPassword());
+
+        logService.logAction("UPDATE_USER", existingUser.getId(), "Usuário atualizado com sucesso");
+        return userRepository.save(existingUser);
     }
 
     public void deleteById(Long id) {

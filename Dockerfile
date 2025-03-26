@@ -12,3 +12,6 @@ EXPOSE 8080
 
 # Comando para executar a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Compila o projeto gerando um .jar
+RUN mvn clean package -DskipTests
